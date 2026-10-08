@@ -1,0 +1,93 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:IdiomTranslationApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="550"
+        x:Class="IdiomTranslationApp.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="IDIAT - Hệ Thống Dịch Thành Ngữ Thông Minh"
+        WindowStartupLocation="CenterScreen"
+        Width="850" Height="600">
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<Grid Margin="20">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<StackPanel Grid.Row="0" Margin="0,0,0,20">
+			<TextBlock Text="IDIAT - Dịch Thành Ngữ Tiếng Anh"
+					   FontSize="24" FontWeight="Bold"
+					   Foreground="DarkBlue"
+					   HorizontalAlignment="Center"/>
+			<TextBlock Text="{Binding AiStatus}"
+					   FontSize="13"
+					   Foreground="OrangeRed"
+					   HorizontalAlignment="Center"
+					   Margin="0,5,0,0"/>
+		</StackPanel>
+
+		<TextBox Grid.Row="1"
+				 Text="{Binding UserText}"
+				 Watermark="Nhập câu tiếng Anh chứa thành ngữ tại đây..."
+				 AcceptsReturn="True" TextWrapping="Wrap"
+				 Margin="0,0,0,10"
+				 FontSize="16"/>
+
+		<StackPanel Grid.Row="2" Margin="0,5">
+			<Button Content="DỊCH NGAY"
+					Command="{Binding TranslateCommand}"
+					HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+					Background="DarkBlue" Foreground="White"
+					FontSize="16" FontWeight="SemiBold"
+					Padding="12"/>
+
+			<ProgressBar IsIndeterminate="True"
+						 IsVisible="{Binding IsBusy}"
+						 Height="4"
+						 Margin="0,5,0,0"
+						 Foreground="Orange"/>
+
+			<UniformGrid Columns="2" Margin="0,15,0,0">
+				<Border Background="#E6F4EA" BorderBrush="#34A853" BorderThickness="1"
+						CornerRadius="6" Margin="0,0,10,0" Padding="12,8">
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="📊 " FontSize="14" VerticalAlignment="Center"/>
+						<TextBlock Text="{Binding BleuScoreDisplay}"
+								   FontSize="14" FontWeight="Bold"
+								   Foreground="#137333" VerticalAlignment="Center"/>
+					</StackPanel>
+				</Border>
+
+				<Border Background="#E8F0FE" BorderBrush="#1A73E8" BorderThickness="1"
+						CornerRadius="6" Margin="10,0,0,0" Padding="12,8">
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="🧠 " FontSize="14" VerticalAlignment="Center"/>
+						<TextBlock Text="{Binding CometScoreDisplay}"
+								   FontSize="14" FontWeight="Bold"
+								   Foreground="#1A73E8" VerticalAlignment="Center"/>
+					</StackPanel>
+				</Border>
+			</UniformGrid>
+		</StackPanel>
+
+		<Border Grid.Row="3" Background="#F8F9FA"
+				BorderBrush="#DEE2E6" BorderThickness="1"
+				CornerRadius="8" Margin="0,15,0,0">
+			<ScrollViewer>
+				<TextBlock Text="{Binding TranslatedResult}"
+						   TextWrapping="Wrap" Padding="15"
+						   FontSize="16"
+						   FontStyle="Normal"
+						   Foreground="#212529"/>
+			</ScrollViewer>
+		</Border>
+	</Grid>
+</Window> 
